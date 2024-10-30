@@ -1,50 +1,42 @@
 const fs = require("fs");
 
+function updateFile(arr, path){
+  fs.writeFileSync(path, JSON.stringify(arr));
 
-function getAllUsers(path) {
+}
+function readFile(path) {
   return JSON.parse(fs.readFileSync(path, "utf8"));
 }
-// Create 
-function addUser(user = Object, path) {
-  usersList.push(user);
-  fs.writeFileSync(path, JSON.stringify(usersList));
+// Create
+function addUser(arr, user = Object, path) {
+  arr.push(user);
+  updateFile(arr, path)
 }
 // Read
-function getUserById(arr, id){
-    const res = arr.findIndex((user) => user.id === id);
-    return arr[res]
+function getUserById(arr, id) {
+  const res = arr.findIndex((user) => user.id === id);
+  return arr[res];
 }
 
 // Delete
-function deleteUser(id, path) {
-  if (usersList.length !== 0) {
-    const itemIndex = usersList.findIndex((user) => user.id === id);
-    usersList.splice(itemIndex, 1);
-    usersList = fs.writeFileSync(PATH, JSON.stringify(usersList));
+function deleteUser(arr, id, path) {
+    const userIndex = arr.findIndex((user) => user.id === id);
+    arr.splice(userIndex, 1);
+    console.log(arr)
+    updateFile(arr, path)
   }
-}
+
 // Update
-function updateUser(updatedUser, path) {
-  if (usersList.length !== 0) {
-    const indexOfUser = usersList.findIndex((user) => user.id === updatedUser.id);
-    if (!indexOfUser !== -1) usersList[indexOfUser] = updatedUser;
-    fs.writeFileSync(path, JSON.stringify(usersList));
-
-  }
+function updateUser(arr, updatedUser, id, path) {
+  const indexOfUser = arr.findIndex((user) => user[id] === updatedUser[id]);
+  if (indexOfUser > -1) arr[indexOfUser] = updatedUser;
+  updateFile(arr, path)
 }
-
-
-
-
-exports.getAllUsers = getAllUsers;
+exports.updateFile = updateFile;
+exports.readFile = readFile;
 exports.getUserById = getUserById;
 exports.addUser = addUser;
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;
 exports.fs = fs;
 exports.usersList = [];
-
-
-
-
-
