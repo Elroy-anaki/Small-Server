@@ -10,9 +10,9 @@ function addUser(user = Object, path) {
   fs.writeFileSync(path, JSON.stringify(usersList));
 }
 // Read
-function getUserById(id){
-    const res = usersList.findIndex((user) => user.id === id);
-    console.log(usersList[res])
+function getUserById(arr, id){
+    const res = arr.findIndex((user) => user.id === id);
+    return arr[res]
 }
 
 // Delete
@@ -33,7 +33,11 @@ function updateUser(updatedUser, path) {
   }
 }
 
+
+
+
 exports.getAllUsers = getAllUsers;
+exports.getUserById = getUserById;
 exports.addUser = addUser;
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;
