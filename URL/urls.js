@@ -4,13 +4,13 @@ const urls = {
     byParams: "/users/getbyid/:id",
   },
   postUrl: {
-    addUser: "addUser",
+    addUser: "/addUser",
   },
   putUrl: {
-    editUser: "editUser",
+    editUser: "/editUser",
   },
   deleteUrl: {
-    deleteUser: "deleteUser",
+    deleteUser: "/deleteUser/:id",
   }
 
 };

@@ -2,7 +2,8 @@
 const express = require("express");
 const env = require("dotenv");
 const {
-  getAllUsers,
+  updateFile,
+  readFile,
   getUserById,
   deleteUser,
   addUser,
@@ -10,6 +11,7 @@ const {
 } = require("./Actions/CRUD");
 let { usersList } = require("./Actions/CRUD");
 const { urls } = require("./URL/urls");
+const {isUserExist} = require('./utils')
 
 // Define the app, the port and the database path
 const app = express();
@@ -18,23 +20,28 @@ const DB_PATH = String(env.config().parsed.DB_PATH);
 
 // ****************************************************************************************************************************************************************
 // The middlewares
-
-app.use(express.json())
+app.use((express.json()))
 app.use((req, res, next) => {
-  usersList = getAllUsers(DB_PATH);
+  usersList = readFile(DB_PATH);
   next();
 });
 
-//TODO to connect this middleware to the put and delete
-app.use((req, res, next) => {
-  usersList = getAllUsers(DB_PATH);
-  usersList.length === 0 ? res.send("There are no users") : next()
+// Middleware of PUT + DELETE
+app.use([urls.putUrl.editUser, urls.deleteUrl.deleteUser], (req, res, next) => {
+  usersList = readFile(DB_PATH);
+  console.log("Middleware...")
+  let userId; 
+  (req.method === 'PUT') ? userId = req.body.id : userId = req.params.id;
+  
+  (!isUserExist(usersList, Number(userId)))
+   ? res.send("This user doesn't exist!!!") : next();
 
-})
+});
+
 
 // ****************************************************************************************************************************************************************
 // The GET requests
-app.get("/", (req, res) => res.send(`Hello`));
+app.get("/", (req, res) => res.send(req.method));
 
 // Get All Users OR By a Query
 app.get(urls.getUrl.defult, (req, res) => {
@@ -66,7 +73,31 @@ app.get(urls.getUrl.defult, (req, res) => {
     const user = getUserById(usersList, id);
     res.send(user);
   });
+
   
   // ****************************************************************************************************************************************************************
-  
+  // The POST request
+  app.post('/addUser', (req, res) => {
+    addUser(usersList, req.body, DB_PATH)
+    res.send("The user added successfully")
+  });
+
+
+// ****************************************************************************************************************************************************************
+// The PUT request
+app.put(urls.putUrl.editUser, (req, res) => {
+  const user = req.body
+  updateUser(usersList, user, user.id, DB_PATH);
+  res.send("The user updated successfully");
+
+})
+
+
+// ****************************************************************************************************************************************************************
+// The DELETE request
+app.delete(urls.deleteUrl.deleteUser, (req, res) => {
+  deleteUser(usersList, req.params.id, DB_PATH)
+  res.send("The user deleted successfully");
+
+})
   app.listen(PORT, () => console.log(`Server runs on port ${PORT} ...`));
