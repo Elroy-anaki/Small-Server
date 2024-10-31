@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "54956212-1587-4a9d-827b-6384ebe8d419",
+		"name": "Users - Server",
+		"description": "# **A few tests on the server I created during my studies as a small project.**\n\n## **Tests:**\n\n- **GET** - All users + Get user by params or query (even some query)\n    \n- **POST** - Add a user to the database (a JSON file)\n    \n- **PUT** - Edit an existing user\n    \n- **DELETE** - Delete an existing user\n    \n\n## **Links:**\n\n**GitHub** - [https://github.com/Elroy-anaki/Small-Server](https://github.com/Elroy-anaki/Small-Server)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39356498"
+	},
+	"item": [
+		{
+			"name": "All Users",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "By Params + Query",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000//users/getbyid/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"",
+						"users",
+						"getbyid",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"Eyal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/addUser ",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"addUser "
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit User",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"Thanks Eyal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/editUser ",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"editUser "
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/deleteUser/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deleteUser",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"\r",
+					""
+				]
+			}
+		}
+	]
+}

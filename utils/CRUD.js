@@ -22,8 +22,7 @@ function getUserById(arr, id) {
 function deleteUser(arr, id, path) {
     const userIndex = arr.findIndex((user) => user.id === id);
     arr.splice(userIndex, 1);
-    console.log(arr)
-    updateFile(arr, path)
+    updateFile(arr, path);
   }
 
 // Update

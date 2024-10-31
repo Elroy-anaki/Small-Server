@@ -8,10 +8,10 @@ const {
   deleteUser,
   addUser,
   updateUser,
-} = require("./Actions/CRUD");
-let { usersList } = require("./Actions/CRUD");
+} = require("./utils/CRUD");
+let { usersList } = require("./utils/CRUD");
 const { urls } = require("./URL/urls");
-const {isUserExist} = require('./utils')
+const {isUserExist} = require('./utils/someUtils')
 
 // Define the app, the port and the database path
 const app = express();
@@ -21,20 +21,21 @@ const DB_PATH = String(env.config().parsed.DB_PATH);
 // ****************************************************************************************************************************************************************
 // The middlewares
 app.use((express.json()))
+
 app.use((req, res, next) => {
   usersList = readFile(DB_PATH);
   next();
 });
 
 // Middleware of PUT + DELETE
-app.use([urls.putUrl.editUser, urls.deleteUrl.deleteUser], (req, res, next) => {
+app.use([urls.putUrl.editUser, urls.deleteUrl.deleteUser, urls.getUrl.byParams], (req, res, next) => {
   usersList = readFile(DB_PATH);
   console.log("Middleware...")
   let userId; 
   (req.method === 'PUT') ? userId = req.body.id : userId = req.params.id;
   
   (!isUserExist(usersList, Number(userId)))
-   ? res.send("This user doesn't exist!!!") : next();
+   ? res.send("There is no user with this id") : next();
 
 });
 
