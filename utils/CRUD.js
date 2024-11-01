@@ -19,8 +19,9 @@ function getUserById(arr, id) {
 }
 
 // Delete
-function deleteUser(arr, id, path) {
-    const userIndex = arr.findIndex((user) => user.id === id);
+function deleteUser(arr, userId, path) {
+    const userIndex = arr.findIndex((user) => user.id === Number(userId));
+    console.log(userIndex);
     arr.splice(userIndex, 1);
     updateFile(arr, path);
   }
@@ -29,7 +30,7 @@ function deleteUser(arr, id, path) {
 function updateUser(arr, updatedUser, id, path) {
   const indexOfUser = arr.findIndex((user) => user[id] === updatedUser[id]);
   if (indexOfUser > -1) arr[indexOfUser] = updatedUser;
-  updateFile(arr, path)
+  updateFile(arr, path);
 }
 exports.updateFile = updateFile;
 exports.readFile = readFile;

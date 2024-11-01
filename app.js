@@ -1,5 +1,6 @@
 // Import the modules
 const express = require("express");
+const cors = require("cors");
 const env = require("dotenv");
 const {
   updateFile,
@@ -20,6 +21,7 @@ const DB_PATH = String(env.config().parsed.DB_PATH);
 
 // ****************************************************************************************************************************************************************
 // The middlewares
+app.use(cors())
 app.use((express.json()))
 
 app.use((req, res, next) => {
@@ -30,12 +32,12 @@ app.use((req, res, next) => {
 // Middleware of PUT + DELETE
 app.use([urls.putUrl.editUser, urls.deleteUrl.deleteUser, urls.getUrl.byParams], (req, res, next) => {
   usersList = readFile(DB_PATH);
-  console.log("Middleware...")
+  console.log(req.params.id)
   let userId; 
   (req.method === 'PUT') ? userId = req.body.id : userId = req.params.id;
   
   (!isUserExist(usersList, Number(userId)))
-   ? res.send("There is no user with this id") : next();
+   ? res.send({mes:"There is no user with this id"}) : next();
 
 });
 
@@ -65,7 +67,7 @@ app.get(urls.getUrl.defult, (req, res) => {
     );
     filteredUsers.length > 0
       ? res.send(filteredUsers)
-      : res.send("There is no match");
+      : res.send({mes:"There is no match"});
     }
   });
 
@@ -97,8 +99,9 @@ app.put(urls.putUrl.editUser, (req, res) => {
 // ****************************************************************************************************************************************************************
 // The DELETE request
 app.delete(urls.deleteUrl.deleteUser, (req, res) => {
-  deleteUser(usersList, req.params.id, DB_PATH)
-  res.send("The user deleted successfully");
+  deleteUser(usersList, req.params.id, DB_PATH);
+  usersList = readFile(DB_PATH);
+  res.send(usersList);
 
 })
   app.listen(PORT, () => console.log(`Server runs on port ${PORT} ...`));
