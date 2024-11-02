@@ -27,11 +27,13 @@ function deleteUser(arr, userId, path) {
   }
 
 // Update
-function updateUser(arr, updatedUser, id, path) {
-  const indexOfUser = arr.findIndex((user) => user[id] === updatedUser[id]);
-  if (indexOfUser > -1) arr[indexOfUser] = updatedUser;
+function updateUser(arr, updatedUser, path) {
+  const indexOfUser = arr.findIndex((user) => user.id === updatedUser.id);
+  console.log("Index", indexOfUser)
+  arr[indexOfUser] = updatedUser;
   updateFile(arr, path);
 }
+
 exports.updateFile = updateFile;
 exports.readFile = readFile;
 exports.getUserById = getUserById;
@@ -39,4 +41,4 @@ exports.addUser = addUser;
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;
 exports.fs = fs;
-exports.usersList = [];
+
