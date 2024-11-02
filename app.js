@@ -13,7 +13,7 @@ const {
 // let { usersList } = require("./utils/CRUD");
 const { urls } = require("./URL/urls");
 const { isUserExist } = require("./utils/someUtils");
-const { updateDB, DB_PATH } = require("./middlewares/some");
+const { updateDB, setNewUser, DB_PATH } = require("./middlewares/some");
 const { logger } = require("./middlewares/logger");
 
 // Define the app, the port and the database path
@@ -77,7 +77,7 @@ app.get(urls.getUrl.byParams, (req, res) => {
 
 // ****************************************************************************************************************************************************************
 // The POST request
-app.post("/addUser", (req, res) => {
+app.post("/addUser",setNewUser, (req, res) => {
   addUser(usersList, req.body, DB_PATH);
   res.send("The user added successfully");
 });

@@ -10,8 +10,8 @@ function readFile(path) {
 // Create
 function addUser(arr, user = Object, path) {
   arr.push(user);
-  updateFile(arr, path)
-}
+  updateFile(arr, path);
+};
 // Read
 function getUserById(arr, id) {
   const res = arr.findIndex((user) => user.id === id);
@@ -34,11 +34,12 @@ function updateUser(arr, updatedUser, path) {
   updateFile(arr, path);
 }
 
-exports.updateFile = updateFile;
-exports.readFile = readFile;
-exports.getUserById = getUserById;
-exports.addUser = addUser;
-exports.updateUser = updateUser;
-exports.deleteUser = deleteUser;
-exports.fs = fs;
+// exports.updateFile = updateFile;
+// exports.readFile = readFile;
+// exports.getUserById = getUserById;
+// exports.addUser = addUser;
+// exports.updateUser = updateUser;
+// exports.deleteUser = deleteUser;
+// exports.fs = fs;
 
+module.exports = {fs, updateFile, readFile, getUserById, addUser, updateUser, deleteUser}

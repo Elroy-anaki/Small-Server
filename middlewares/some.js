@@ -7,4 +7,17 @@ const updateDB = (req, res, next) => {
   next();
 
 }
-module.exports = {DB_PATH, updateDB}
+
+const setNewUser = (req, res, next) => {
+  
+  req.body.id = usersList[usersList.length - 1].id + 1;
+  console.log(req.body);
+  next();
+
+}
+
+
+
+
+
+module.exports = {DB_PATH, updateDB, setNewUser}
